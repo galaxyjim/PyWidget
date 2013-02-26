@@ -1,0 +1,79 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: package pywidget</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>pywidget</strong></big></big> (version 1.0)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/jessy/Desktop/PIDR/pywidget/__init__.py">/Users/jessy/Desktop/PIDR/pywidget/__init__.py</a></font></td></tr></table>
+    <p><tt>Defines&nbsp;a&nbsp;set&nbsp;of&nbsp;basic&nbsp;2D&nbsp;widgets.<br>
+&nbsp;<br>
+All&nbsp;widgets&nbsp;have:<br>
+----------------<br>
+&nbsp;<br>
+-&nbsp;a&nbsp;position&nbsp;in&nbsp;2D&nbsp;space<br>
+-&nbsp;a&nbsp;dimension&nbsp;in&nbsp;2D&nbsp;space<br>
+-&nbsp;a&nbsp;x&nbsp;alignment&nbsp;('left',&nbsp;'center'&nbsp;or&nbsp;'right')<br>
+-&nbsp;a&nbsp;y&nbsp;alignment&nbsp;('top',&nbsp;'center'&nbsp;or&nbsp;'bottom')<br>
+&nbsp;<br>
+Available&nbsp;widgets:<br>
+-----------------<br>
+&nbsp;<br>
+-&nbsp;Button&nbsp;(a&nbsp;simple&nbsp;button)<br>
+-&nbsp;Checkbox&nbsp;(a&nbsp;simple&nbsp;checkbox)<br>
+-&nbsp;Dialog&nbsp;(a&nbsp;dialog&nbsp;with&nbsp;a&nbsp;title,&nbsp;a&nbsp;close&nbsp;button&nbsp;and&nbsp;a&nbsp;content&nbsp;which&nbsp;has&nbsp;to&nbsp;be&nbsp;a&nbsp;children&nbsp;of&nbsp;Widget)<br>
+-&nbsp;HBox&nbsp;(used&nbsp;to&nbsp;split&nbsp;content&nbsp;into&nbsp;horizontal&nbsp;parts)<br>
+-&nbsp;Label&nbsp;(a&nbsp;simple&nbsp;label)<br>
+-&nbsp;Slider&nbsp;(a&nbsp;simple&nbsp;slider)<br>
+-&nbsp;VBox&nbsp;(used&nbsp;to&nbsp;split&nbsp;content&nbsp;into&nbsp;vertical&nbsp;parts)<br>
+&nbsp;<br>
+Example&nbsp;usage:<br>
+--------------<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;window&nbsp;=&nbsp;pyglet.window.Window(resizable=True)<br>
+&nbsp;&nbsp;&nbsp;button&nbsp;=&nbsp;Button(text='&lt;font&nbsp;face="Helvetica,Arial"&nbsp;size="2"&nbsp;color=white&gt;Click&nbsp;me&lt;/font&gt;',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x=50,&nbsp;y=50)<br>
+&nbsp;&nbsp;&nbsp;window.push_handlers(button)<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;@window.event<br>
+&nbsp;&nbsp;&nbsp;def&nbsp;on_draw():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window.clear()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;button.on_draw()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;@button.event<br>
+&nbsp;&nbsp;&nbsp;def&nbsp;on_button_press(button):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;'Click'<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;pyglet.app.run()<br>
+&nbsp;<br>
+:requires:&nbsp;pyglet&nbsp;1.1</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Package Contents</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="pywidget.button.html">button</a><br>
+<a href="pywidget.checkbox.html">checkbox</a><br>
+<a href="pywidget.dialog.html">dialog</a><br>
+</td><td width="25%" valign=top><a href="pywidget.hbox.html">hbox</a><br>
+<a href="pywidget.label.html">label</a><br>
+<a href="pywidget.shape.html"><strong>shape</strong>&nbsp;(package)</a><br>
+</td><td width="25%" valign=top><a href="pywidget.slider.html">slider</a><br>
+<a href="pywidget.test.html">test</a><br>
+<a href="pywidget.vbox.html">vbox</a><br>
+</td><td width="25%" valign=top><a href="pywidget.widget.html">widget</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__docformat__</strong> = 'restructuredtext'<br>
+<strong>__version__</strong> = '1.0'</td></tr></table>
+</body></html>
