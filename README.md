@@ -38,4 +38,6 @@ The home of Pyglet:
 
 Some Excellent samples:
  [Pyglet-hene](http://code.google.com/p/pyglet-hene/)
+
+Forked from original project [pywidget](https://code.google.com/p/pywidget/)
  
