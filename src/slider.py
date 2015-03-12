@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Copyright (c) 2009 Nicolas Rougier, Matthieu Kluj, Jessy Cyganczuk
+# Copyright (c) 2015 James Gaston.
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -119,6 +120,7 @@ class Slider(Widget):
         if button == pyglet.window.mouse.LEFT:
           self._is_dragging = False
           self._elements['cursor'].background = (1, 1, 1, 1)
+          self.dispatch_event('on_value_change', self)
         return pyglet.event.EVENT_UNHANDLED
         
 Slider.register_event_type('on_value_change')

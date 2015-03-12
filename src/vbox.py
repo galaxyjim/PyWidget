@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Copyright (c) 2009 Nicolas Rougier, Matthieu Kluj, Jessy Cyganczuk
+# Copyright (c) 2015 James Gaston
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -36,6 +37,7 @@ import pyglet
 from pyglet.gl import *
 from shape import Rectangle, Ellipse, Cross, Star
 from widget import Widget
+
 
 # ----------------------------------------------------------------------- VBox
 class VBox(Widget):
