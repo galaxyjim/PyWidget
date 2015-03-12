@@ -2,7 +2,7 @@
 #PyWidget 
 A set of GUI tools for Python and Pyglet. 
 
-This gui is lightweight.
+This gui is *lightweight*.
 It easily integrates into your event loop and your draw code.
 
 ## Requirements
