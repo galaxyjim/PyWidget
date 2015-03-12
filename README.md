@@ -11,7 +11,7 @@ It easily integrates into your event loop and your draw code.
 
 ## Usage
 
-test.py demostrates all of the widgets.
+**test.py** demonstrates all of the widgets.
 
 Each widget includes sample/test code.
 To see a widget, simply run its script,
