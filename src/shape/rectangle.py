@@ -35,7 +35,7 @@
 import math
 import pyglet
 from pyglet.gl import *
-from shape import Shape, arc_circle
+from .shape import Shape, arc_circle
 
 
 class Rectangle(Shape):

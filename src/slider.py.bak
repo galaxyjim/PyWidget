@@ -136,6 +136,6 @@ if __name__ == '__main__':
 
     @slider.event
     def on_value_change(slider):
-        print(slider.value)
+        print slider.value
 
     pyglet.app.run()

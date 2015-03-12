@@ -2,7 +2,7 @@
 A set of widgets made with Python and Pyglet. 
 
 ## Requirements
-- Python 2.4 or superior
+- Python 3.4 or superior	March/2015
 - Pyglet 1.x
 
 ## Usage

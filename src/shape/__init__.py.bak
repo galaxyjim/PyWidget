@@ -86,9 +86,9 @@ Example usage:
 __docformat__ = 'restructuredtext'
 __version__ = '1.0'
 
-from .rectangle import Rectangle
-from .triangle import Triangle
-from .ellipse import Ellipse
-from .cross import Cross
-from .star import Star
+from rectangle import Rectangle
+from triangle import Triangle
+from ellipse import Ellipse
+from cross import Cross
+from star import Star
 

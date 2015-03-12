@@ -37,6 +37,7 @@ import pyglet
 from pyglet.gl import *
 from pyglet import gl
 
+
 # ------------------------------------------------------------------------------
 def arc_circle(x, y, r1, r2, theta1, theta2, dtheta=10):
     ''' Return a list of vertices for the specified arc circle '''

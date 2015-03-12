@@ -35,53 +35,49 @@
 import math
 import pyglet
 from pyglet.gl import *
-from .shape import Shape, arc_circle
+from shape import Shape
 
-class Ellipse(Shape):
-    ''' Ellipse shape.
+class Triangle(Shape):
+    ''' Triangle shape.
 
-    This is a class for rendering an ellipse.
+    This is a class for rendering a triangle.
     '''
 
     # _________________________________________________________________ __init__
-    def __init__(self, theta1=0, theta2=360, *args, **kwargs):
-        '''Create an ellipse '''
+    def __init__(self, direction='up', *args, **kwargs):
+        '''Create an oriented triangle.
 
-        self._theta1 = theta1
-        self._theta2 = theta2
-        Shape.__init__(self, *args, **kwargs)
-        self._fill_mode = GL_TRIANGLES
-        self._line_mode = GL_LINE_LOOP
+        :Parameters:
+            `direction` : str
+               The triangle is oriented relative to its center to this property,
+               which must be one of the alignment constants `left`, `right`,
+               `up` or `down`.
+        '''
+
+        self._direction = direction
+        Shape.__init__(self,*args, **kwargs)
         self._update_position()
         self._update_shape()
 
     # __________________________________________________________________ __str__
     def __str__(self):
-        s = '<Ellipse %dx%d+%d+%d>' % (self._width,self._height,self._x,self._y)
+        s='<Triangle %dx%d+%d+%d>' % (self._width,self._height,self._x,self._y)
         return s
 
-    # ___________________________________________________________________ theta1
-    def _get_theta1(self):
-        return self._theta1
-    def _set_theta1(self, theta1):
-        self._theta1 = theta1
+    # ________________________________________________________________ direction
+    def _get_direction(self):
+        return self._direction
+    def _set_direction(self, direction):
+        self._direction = direction
         self._update_shape()
-    theta1 = property(_get_theta1, _set_theta1,
-        doc='''Starting angle in degrees
+    direction = property(_get_direction, _set_direction,
+        doc='''Direction of triangle.
 
-        :type: float
-        ''')
+        The triangle is oriented relative to its center to this property,
+        which must be one of the alignment constants `left`, `right`, `up`
+        or `down`.
 
-    # ___________________________________________________________________ theta2
-    def _get_theta2(self):
-        return self._theta2
-    def _set_theta2(self, theta2):
-        self._theta2 = theta2
-        self._update_shape()
-    theta2 = property(_get_theta2, _set_theta2,
-        doc='''Ending angle in degrees
-
-        :type: float
+        :type: str
         ''')
 
     # ________________________________________________________ generate_vertices
@@ -89,12 +85,14 @@ class Ellipse(Shape):
         ''' '''
 
         x,y,w,h = 0,0,self._width-1,self._height-1
-        vertices = arc_circle (x+w/2,y+h/2,w/2,h/2,self._theta1,self._theta2,5)
-        v = []
-        for i in range(len(vertices)-1):
-            v += [vertices[i],]
-            v += [vertices[i+1],]
-            v += [(w/2,h/2),]
-        if math.fmod(self._theta1,360) != math.fmod(self._theta2,360):
-            vertices += [(w/2,h/2),]
-        return vertices, v
+        if self._direction == 'left':
+            vertices = [(x,y), (x,y+h), (x+w,y+h/2)]
+        elif self._direction == 'right':
+            vertices = [(x+w,y), (x+w,y+h), (x,y+h/2)]
+        elif self._direction == 'down':
+            vertices = [(x,y+h), (x+w,y+h), (x+w/2,y)]
+        else:
+            vertices = [(x,y), (x+w,y), (x+w/2,y+h)]
+        return vertices, vertices
+
+

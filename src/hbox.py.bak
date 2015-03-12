@@ -38,61 +38,50 @@ from shape import Rectangle, Ellipse, Cross, Star
 from widget import Widget
 
 
-# ----------------------------------------------------------------------- Label
-class Label(Widget):
-    ''' Label widget
+# ----------------------------------------------------------------------- HBox
+class HBox(Widget):
+    ''' HBox widget
     
-    Basic label
+    Used to split content into horizontal parts
     '''
     # _________________________________________________________________ __init__
-    def __init__(self, x=0, y=0, z=0, width=0, height=0, pad = (10,2),
-                 font_size = 10, anchor_x='left', anchor_y='bottom',
-                 text='Text'):
-
-        self.text = text
-        label = pyglet.text.HTMLLabel(self.text,
-                                      anchor_x = 'center', anchor_y = 'center')
-        xpad,ypad = pad
-        if width == 0:
-            width = label.content_width + 2*xpad
-        if height == 0:
-            height = label.content_height/2 +2*ypad
-        label.x = width/2
-        label.y = height/2+1
-
-        Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
-        self._elements['label'] = label
-
-    # ____________________________________________________________________ set_cursor
-    def set_text(self, text):
-      ''' Sets the label text
-
-      :Parameters:
-          `text` : String
-              text of the label.
-      '''
-      self.text = text
-      self._elements['label'].text = text
-
+    def __init__(self, x=0, y=0, z=0, width=300, height=300,
+                anchor_x='left', anchor_y='bottom', elements=[]):
+      Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
+      self.margin = 3
+      length = len(elements)
+      for i in range(length):
+        elements[i].height = height - 2 * self.margin
+        elements[i].width = width / length - 2 * self.margin
+        elements[i].x = (width - self.margin) - (i + 1) * (elements[i].width + self.margin)
+        elements[i].y = self.margin
+        self._elements[i] = elements[i]
+      
     # ____________________________________________________________________ update_width
     def update_width(self):
-        self._elements['label'].width = self.width
-        self._elements['label'].x = self.width / 2
-        
+      length = len(self._elements)
+      for i in range(length):
+        self._elements[i].width = self.width / length - 2 * self.margin
+        self._elements[i].x = (self.width - self.margin) - (i + 1) * (self._elements[i].width + self.margin)
+
     # ____________________________________________________________________ update_height
     def update_height(self):
-        self._elements['label'].content_height = self.height
-        self._elements['label'].y = self.height / 2 + 1
+      for i in range(len(self._elements)):
+        self._elements[i].height = self.height - 2 * self.margin
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
+    from button import Button
     window = pyglet.window.Window(resizable=True)
-    label = Label(text='<font face="Helvetica,Arial" size="2" color=white>Just a test</font>',
-                    x=50, y=50)
-
+    
+    button1 = Button(text='<font face="Helvetica,Arial" size="2" color="white">Click me 1</font>')
+    button2 = Button(text='<font face="Helvetica,Arial" size="2" color=white>Click me 2</font>')
+    button3 = Button(text='<font face="Helvetica,Arial" size="2" color=white>Click me 3</font>')
+    
+    hbox = HBox(x=50, y=50, height=30, width=300, elements=[button1, button2, button3])
+    window.push_handlers(hbox)
     @window.event
     def on_draw():
         window.clear()
-        label.on_draw()
-
+        hbox.on_draw()
     pyglet.app.run()

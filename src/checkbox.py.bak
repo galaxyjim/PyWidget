@@ -120,6 +120,6 @@ if __name__ == '__main__':
 
     @checkbox.event
     def on_value_change(checkbox):
-        print(checkbox.checked)
+        print checkbox.checked
 
     pyglet.app.run()

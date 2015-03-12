@@ -54,11 +54,7 @@ class Radiobutton(Widget):
 
         self.margin = 3
         self.ropen = 0
-
-        # 
         length = len(elements)
-
-        #
         for i in range(length):
             elements[i].height = height / length - 2 * self.margin
             elements[i].width = width - 2 * self.margin
@@ -67,10 +63,9 @@ class Radiobutton(Widget):
             self._elements[i] = elements[i]
             self._elements[i]._hidden = True
 
-        #
         chooselabel = Label(text='...',
                             x=self.margin, y= (height - self.margin) - (
-                            elements[0].height + self.margin),
+                            elements[i].height + self.margin),
                             height = height / length - 2 * self.margin,
                             width = width - 2 * self.margin)
 
@@ -81,7 +76,6 @@ class Radiobutton(Widget):
 
         self._elements['chooselabel'] = chooselabel
         self._elements['frame'] = frame
-
 
     # ____________________________________________________________________ update_width
     def update_width(self):
@@ -166,7 +160,7 @@ if __name__ == '__main__':
 
     @rbutton.event
     def on_Radiobutton_press(rbutton):
-        print('change')
-        print(rbutton._elements['chooselabel'].text)
+        print 'change'
+        print rbutton._elements['chooselabel'].text
 
     pyglet.app.run()

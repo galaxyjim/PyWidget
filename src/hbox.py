@@ -37,7 +37,6 @@ from pyglet.gl import *
 from shape import Rectangle, Ellipse, Cross, Star
 from widget import Widget
 
-
 # ----------------------------------------------------------------------- HBox
 class HBox(Widget):
     ''' HBox widget
@@ -71,7 +70,7 @@ class HBox(Widget):
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
-    from button import Button
+    from .button import Button
     window = pyglet.window.Window(resizable=True)
     
     button1 = Button(text='<font face="Helvetica,Arial" size="2" color="white">Click me 1</font>')

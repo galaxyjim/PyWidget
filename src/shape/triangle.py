@@ -35,7 +35,7 @@
 import math
 import pyglet
 from pyglet.gl import *
-from shape import Shape
+from .shape import Shape
 
 class Triangle(Shape):
     ''' Triangle shape.

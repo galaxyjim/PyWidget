@@ -113,6 +113,6 @@ if __name__ == '__main__':
 
     @button.event
     def on_button_press(button):
-        print 'Click'
+        print('Click')
 
     pyglet.app.run()

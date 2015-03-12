@@ -51,7 +51,7 @@ class Label(Widget):
 
         self.text = text
         label = pyglet.text.HTMLLabel(self.text,
-                                      anchor_x = 'center', anchor_y = 'center')
+                                      anchor_x='center', anchor_y='center')
         xpad,ypad = pad
         if width == 0:
             width = label.content_width + 2*xpad

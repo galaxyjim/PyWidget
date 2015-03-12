@@ -37,7 +37,6 @@ from pyglet.gl import *
 from shape import Rectangle, Ellipse, Cross, Star
 from widget import Widget
 
-
 # ----------------------------------------------------------------------- VBox
 class VBox(Widget):
     ''' Slider widget
