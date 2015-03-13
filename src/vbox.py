@@ -58,7 +58,7 @@ class VBox(Widget):
         elements[i].y = (height - self.margin) - (i + 1) * (elements[i].height + self.margin)
         
         self._elements[i] = elements[i]
-        self._elements[i]._parent = self
+        self._elements[i].set_parent( self )
       
     # ____________________________________________________________________ update_width
     def update_width(self):

@@ -84,7 +84,7 @@ class Dialog(Widget):
           content.x = margin;
           content.y = margin;
           self._elements['acontent'] = content
-          self._elements['acontent']._parent = self
+          self._elements['acontent'].set_parent(self)
         
         self._is_dragging = False
         

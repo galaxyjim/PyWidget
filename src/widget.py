@@ -205,6 +205,10 @@ class Widget(EventDispatcher):
         :type: str
         ''')
 
+    # ________________________________________________________________ SetParent
+    def set_parent(self, parent):
+        self.parent = parent
+        
     # ________________________________________________________________ SetTopmost
     def set_topmost(self):
         if self._parent != None:

@@ -56,7 +56,7 @@ class HBox(Widget):
         elements[i].y = self.margin
         
         self._elements[i] = elements[i]
-        self._elements[i]._parent = self
+        self._elements[i].set_parent( self )
       
     # ____________________________________________________________________ update_width
     def update_width(self):
