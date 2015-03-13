@@ -54,7 +54,9 @@ class HBox(Widget):
         elements[i].width = width / length - 2 * self.margin
         elements[i].x = (width - self.margin) - (i + 1) * (elements[i].width + self.margin)
         elements[i].y = self.margin
+        
         self._elements[i] = elements[i]
+        self._elements[i]._parent = self
       
     # ____________________________________________________________________ update_width
     def update_width(self):
@@ -70,7 +72,7 @@ class HBox(Widget):
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
-    from .button import Button
+    from button import Button
     window = pyglet.window.Window(resizable=True)
     
     button1 = Button(text='<font face="Helvetica,Arial" size="2" color="white">Click me 1</font>')

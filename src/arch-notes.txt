@@ -1,0 +1,25 @@
+
+
+base class:
+    widget.py
+
+container classes:
+    vbox
+    hbox
+    dialog
+
+widgets can have a parent.
+
+the container classes set the parent for the elements when the container is constructed
+
+elements (child windows) are drawn in the order they are created.
+items created last are on top.
+
+elements are stored in an OrderedDict to preserve/create a defined order
+and so elements can be accessed by key.
+
+combobox and dialog items to bring themselves to the foreground,
+they need to do that, because they can overlap other controls.
+they need access to notify their parent.
+
+A widgets parent is set by the parent when the element is added.

@@ -32,6 +32,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 # -----------------------------------------------------------------------------
+import collections
 import pyglet
 from pyglet.gl import *
 from pyglet.event import EventDispatcher
@@ -69,18 +70,19 @@ class Widget(EventDispatcher):
                 See `Widget.anchor_y` for details.
         '''
         EventDispatcher.__init__(self)
+
         self._x, self._y, self._z = x, y, z
         self._root_x, self._root_y, self._root_z = 0,0,0
         self._width = width
         self._height = height
         self.anchor_x = anchor_x
         self.anchor_y = anchor_y
-        self._children = []
-        self._elements = {}
+        self._elements = collections.OrderedDict() # we need to preserve draw order
         self._moveable = True
         self._focusable = True
         self._sizeable = True
         self._hidden = False
+        self._parent = None
 
     # ________________________________________________________________________ x
     def _get_x(self):
@@ -89,8 +91,9 @@ class Widget(EventDispatcher):
         self._root_x += (x-self._x)
         self._x = x
         self.update_x()
+
     x = property(_get_x, _set_x,
-        doc='''X coordinate of the widget.
+        doc='''X cordinate of the widget.
 
         :type: int
         ''')
@@ -104,6 +107,7 @@ class Widget(EventDispatcher):
         self._root_y += (y-self._y)
         self._y = y
         self.update_y()
+
     y = property(_get_y, _set_y,
         doc='''Y coordinate of the widget.
 
@@ -118,6 +122,7 @@ class Widget(EventDispatcher):
     def _set_z(self, z):
         self._z = z
         self.update_z()
+
     z = property(_get_z, _set_z,
         doc='''Z coordinate of the widget.
 
@@ -132,6 +137,7 @@ class Widget(EventDispatcher):
     def _set_width(self, width):
         self._width = width
         self.update_width()
+
     width = property(_get_width, _set_width, 
         doc='''Width of the widget.
 
@@ -146,6 +152,7 @@ class Widget(EventDispatcher):
     def _set_height(self, height):
         self._height = height
         self.update_height()
+
     height = property(_get_height, _set_height,
         doc='''Height of the widget.
         
@@ -198,6 +205,21 @@ class Widget(EventDispatcher):
         :type: str
         ''')
 
+    # ________________________________________________________________ SetTopmost
+    def set_topmost(self):
+        if self._parent != None:
+            key = None
+            for e in self._parent._elements:
+                if self._parent._elements[e] == self:
+                    key = e
+                    break
+                
+            if key == None:
+                raise(Exception('Parent incorrectly set'))
+            self._parent._elements.move_to_end(key)
+
+            # pass message up chain, so the entire branch is moved up
+            self._parent.set_topmost()
     # ________________________________________________________________ outer_box
     def outer_box(self):
         ''' Returns the outer bounding box of the widget
@@ -308,10 +330,14 @@ class Widget(EventDispatcher):
     def on_draw(self):
       ''' Handles on_draw events
       '''
+      
       if not self._hidden:
+          
         glTranslatef(self._root_x, self._root_y, self._root_z)
+        
         for key in self._elements.keys():
             self._elements[key].draw()
+            
         glTranslatef(-self._root_x, -self._root_y, -self._root_z)
         
     # _____________________________________________________________________ on_draw

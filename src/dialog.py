@@ -49,9 +49,10 @@ class Dialog(Widget):
     def __init__(self, x=0, y=0, z=0, width=300, height=300,
                  anchor_x='left', anchor_y='bottom', title='Dialog Title', content=None):
         fg = (0.5, 0.5, 0.5, 1)
-        bg = (0.5, 0.5, 0.5, .5)
+        bg = (0.5, 0.5, 0.5, 0.5)
         fg2 = (1.0, 1.0, 1.0, 1)
         bg2 = (1.0, 0.0, 0.0, 1)
+        
         frame = Rectangle (x=0, y=0, z=z,
                            width=width, height=height, radius=12,
                            foreground=fg, background=bg,
@@ -83,6 +84,7 @@ class Dialog(Widget):
           content.x = margin;
           content.y = margin;
           self._elements['acontent'] = content
+          self._elements['acontent']._parent = self
         
         self._is_dragging = False
         

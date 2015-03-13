@@ -59,15 +59,7 @@ class Radiobutton(Widget):
         length = len(elements)
 
         #
-        for i in range(length):
-            elements[i].height = height / length - 2 * self.margin
-            elements[i].width = width - 2 * self.margin
-            elements[i].x = self.margin
-            elements[i].y = (height - self.margin) - (i + 2) * (elements[i].height + self.margin)
-            self._elements[i] = elements[i]
-            self._elements[i]._hidden = True
 
-        #
         chooselabel = Label(text='...',
                             x=self.margin, y= (height - self.margin) - (
                             elements[0].height + self.margin),
@@ -79,9 +71,17 @@ class Radiobutton(Widget):
                            foreground=fg, background=bg,
                            anchor_x=anchor_x, anchor_y=anchor_y)
 
-        self._elements['chooselabel'] = chooselabel
         self._elements['frame'] = frame
+        self._elements['chooselabel'] = chooselabel
 
+        #
+        for i in range(length):
+            elements[i].height = height / length - 2 * self.margin
+            elements[i].width = width - 2 * self.margin
+            elements[i].x = self.margin
+            elements[i].y = (height - self.margin) - (i + 2) * (elements[i].height + self.margin)
+            self._elements[i] = elements[i]
+            self._elements[i]._hidden = True
 
     # ____________________________________________________________________ update_width
     def update_width(self):
@@ -141,7 +141,13 @@ class Radiobutton(Widget):
     # ___________________________________________________________ on_mouse_release
     def on_mouse_release(self, x, y, Radiobutton, modifiers):
         if Radiobutton == pyglet.window.mouse.LEFT:
-          self._elements['frame'].background = (0.5, 0.5, 0.5, 0.5)
+          if self.ropen == 0:
+              # closed. looks like a button
+              self._elements['frame'].background = (0.5, 0.5, 0.5, 0.5)
+          else:
+              # open. looks like a list box
+              self._elements['frame'].background = (0.5, 0.5, 0.5, 0.85)
+          self.set_topmost()
         return pyglet.event.EVENT_UNHANDLED
 
 Radiobutton.register_event_type('on_Radiobutton_press')
