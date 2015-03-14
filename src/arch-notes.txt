@@ -10,7 +10,8 @@ container classes:
 
 widgets can have a parent.
 
-the container classes set the parent for the elements when the container is constructed
+the container classes set the parent for the elements when the container is
+constructed
 
 elements (child windows) are drawn in the order they are created.
 items created last are on top.
@@ -23,3 +24,8 @@ they need to do that, because they can overlap other controls.
 they need access to notify their parent.
 
 A widgets parent is set by the parent when the element is added.
+
+
+if windows are to overlap, they must be contained in a common parent window,
+even if that parent window draws nothing it will coordinate the draw and message
+handling
