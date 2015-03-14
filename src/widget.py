@@ -208,7 +208,7 @@ class Widget(EventDispatcher):
 
     # ________________________________________________________________ SetParent
     def set_parent(self, parent):
-        self.parent = parent
+        self._parent = parent
         
     # ________________________________________________________________ SetTopmost
     def set_topmost(self):
