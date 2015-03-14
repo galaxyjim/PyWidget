@@ -1,5 +1,5 @@
 
-#PyWidget 
+#PyWidget*3* 
 A set of GUI tools for Python and Pyglet. 
 
 This gui is *lightweight*.
@@ -40,4 +40,4 @@ Some Excellent samples:
  [Pyglet-hene](http://code.google.com/p/pyglet-hene/)
 
 Forked from original project [pywidget](https://code.google.com/p/pywidget/)
- 
+renamed PyWidget*3* to reflect the port to python 3.4
