@@ -256,37 +256,45 @@ class Widget(EventDispatcher):
             `modifiers` : int
                 Button modifiers.
         '''
-        for i in self._elements:
+        for i in reversed(self._elements):
           if hasattr(self._elements[i], 'on_mouse_press'):
-            self._elements[i].on_mouse_press(x - self.x, y - self.y, button, modifiers)
+              
+            status = self._elements[i].on_mouse_press(x - self.x, y - self.y, button, modifiers)
+
+            if status == pyglet.event.EVENT_HANDLED:
+                return(status)
 
     # ____________________________________________________________ on_mouse_drag
     def on_mouse_drag(self, x, y, dx, dy, button, modifiers):
-      ''' Handles on_mouse_drag events
+        ''' Handles on_mouse_drag events
       
-      :Parameters:
-          `x` : float
-              X coordinate.
-          `y` : float
-              Y coordinate.
-          `dx` : float
-              X deplacement.
-          `dy` : float
-              Y deplacement.
-          `button` : int
-              Button identifier.
-          `modifiers` : int
-              Button modifiers.
-      '''
-      for i in self._elements:
-        if hasattr(self._elements[i], 'on_mouse_drag'):
-          self._elements[i].on_mouse_drag(x - self.x, y - self.y, dx, dy, button, modifiers)
+          :Parameters:
+              `x` : float
+                  X coordinate.
+              `y` : float
+                  Y coordinate.
+              `dx` : float
+                  X deplacement.
+              `dy` : float
+                  Y deplacement.
+              `button` : int
+                  Button identifier.
+              `modifiers` : int
+                  Button modifiers.
+        '''
+        for i in reversed(self._elements):
+            if hasattr(self._elements[i], 'on_mouse_drag'):
+
+                status = self._elements[i].on_mouse_drag(x - self.x, y - self.y, dx, dy, button, modifiers)
+
+                if status == pyglet.event.EVENT_HANDLED:
+                    return(status)
           
     # __________________________________________________________ on_mouse_motion
     def on_mouse_motion(self, x, y, dx, dy):
-      ''' Handles on_mouse_motion events
-      
-      :Parameters:
+        ''' Handles on_mouse_motion events
+
+        :Parameters:
           `x` : float
               X coordinate.
           `y` : float
@@ -295,16 +303,21 @@ class Widget(EventDispatcher):
               X deplacement.
           `dy` : float
               Y deplacement.
-      '''
-      for i in self._elements:
-        if hasattr(self._elements[i], 'on_mouse_motion'):
-          self._elements[i].on_mouse_motion(x - self.x, y - self.y, dx, dy)
+        '''
+        for i in reversed(self._elements):
+            if hasattr(self._elements[i], 'on_mouse_motion'):
+                
+                status = self._elements[i].on_mouse_motion(x - self.x, y - self.y, dx, dy)
+
+                if status == pyglet.event.EVENT_HANDLED:
+                    return(status)
+
 
     # _________________________________________________________ on_mouse_release
     def on_mouse_release(self, x, y, button, modifiers):
-      ''' Handles on_mouse_release events
-      
-      :Parameters:
+        ''' Handles on_mouse_release events
+
+        :Parameters:
           `x` : float
               X coordinate.
           `y` : float
@@ -313,10 +326,15 @@ class Widget(EventDispatcher):
               Button identifier.
           `modifiers` : int
               Button modifiers.
-      '''
-      for i in self._elements:
-        if hasattr(self._elements[i], 'on_mouse_release'):
-          self._elements[i].on_mouse_release(x - self.x, y - self.y, button, modifiers)
+        '''
+        for i in reversed(self._elements):
+            if hasattr(self._elements[i], 'on_mouse_release'):
+
+                status = self._elements[i].on_mouse_release(x - self.x, y - self.y, button, modifiers)
+
+                if status == pyglet.event.EVENT_HANDLED:
+                    return(status)
+                
 
     # _________________________________________________________________ hit_test
     def hit_test(self,x,y):

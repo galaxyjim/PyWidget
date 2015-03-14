@@ -84,6 +84,8 @@ class Label(Widget):
                  font_size = 10, anchor_x='left', anchor_y='bottom',
                  text='Text'):
 
+        Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
+
         self.text = text
         label = pyglet.text.HTMLLabel(self.text,
                                       anchor_x = 'center', anchor_y = 'center')
@@ -95,7 +97,6 @@ class Label(Widget):
         label.x = width/2
         label.y = height/2+1
 
-        Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
         self._elements['label'] = label
 
     # ____________________________________________________________________ set_cursor

@@ -49,8 +49,11 @@ class Dialog(Widget):
     # _________________________________________________________________ __init__
     def __init__(self, x=0, y=0, z=0, width=300, height=300,
                  anchor_x='left', anchor_y='bottom', title='Dialog Title', content=None):
+
+        Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
+
         fg = (0.5, 0.5, 0.5, 1)
-        bg = (0.5, 0.5, 0.5, 0.5)
+        bg = (0.5, 0.6, 0.6, 1)
         fg2 = (1.0, 1.0, 1.0, 1)
         bg2 = (1.0, 0.0, 0.0, 1)
         
@@ -72,7 +75,6 @@ class Dialog(Widget):
                                   color=(255,255,255,255),
                                   x=12, y=height-12,
                                   anchor_x='left', anchor_y='center')
-        Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
         self._elements['frame'] = frame
         self._elements['topbar'] = topbar
         self._elements['tclose_button'] = close_button
@@ -92,24 +94,30 @@ class Dialog(Widget):
     # __________________________________________________________ on_mouse_press
     def on_mouse_press(self, x, y, button, modifiers):
         if button == pyglet.window.mouse.LEFT:
+
+            # closse
             if self._elements['tclose_button'].hit_test(x - self.x, y - self.y):
               self._elements['tclose_button'].background = (0.8, 0.0, 0.0, 1)
               self._hidden = True
               return pyglet.event.EVENT_HANDLED
+
+            # start drag
             elif self._elements['topbar'].hit_test(x - self.x, y - self.y):
               self._is_dragging = True
               self._elements['topbar'].background = (0.8, 0.8, 0.8, 0.5)
+
+              self.set_topmost()
               return pyglet.event.EVENT_HANDLED
-        super(Dialog, self).on_mouse_press(x, y, button, modifiers)
-        return pyglet.event.EVENT_UNHANDLED
+            
+        # default - pass along to child widgets
+        return super(Dialog, self).on_mouse_press(x, y, button, modifiers)
       
     # __________________________________________________________ on_mouse_release
     def on_mouse_release(self, x, y, button, modifiers):
         if button == pyglet.window.mouse.LEFT:
           self._is_dragging = False
           self._elements['topbar'].background = (0.5, 0.5, 0.5, 0.5)
-        super(Dialog, self).on_mouse_release(x, y, button, modifiers)
-        return pyglet.event.EVENT_UNHANDLED
+        return super(Dialog, self).on_mouse_release(x, y, button, modifiers)
     
     # __________________________________________________________ on_mouse_drag    
     def on_mouse_drag(self, x, y, dx, dy, button,modifiers):
@@ -118,17 +126,17 @@ class Dialog(Widget):
                 self.x += dx
                 self.y += dy
                 return pyglet.event.EVENT_HANDLED
-        super(Dialog, self).on_mouse_drag(x, y, dx, dy, button, modifiers)
-        return pyglet.event.EVENT_UNHANDLED
-
+        return super(Dialog, self).on_mouse_drag(x, y, dx, dy, button, modifiers)
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
     window = pyglet.window.Window(resizable=True)
     dialog = Dialog(x=50, y=50)
     window.push_handlers(dialog)
+    
     @window.event
     def on_draw():
         window.clear()
         dialog.on_draw()
+
     pyglet.app.run()

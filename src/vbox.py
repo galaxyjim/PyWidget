@@ -48,7 +48,9 @@ class VBox(Widget):
     # _________________________________________________________________ __init__
     def __init__(self, x=0, y=0, z=0, width=300, height=300,
                 anchor_x='left', anchor_y='bottom', elements=[]):
+
       Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
+
       self.margin = 3
       length = len(elements)
       for i in range(length):

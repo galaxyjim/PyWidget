@@ -82,6 +82,8 @@ class Checkbox(Widget):
     # _________________________________________________________________ __init__
     def __init__(self, x=0, y=0, z=0, width=0, height=0, pad = (10,2),
                  font_size = 10, anchor_x='left', anchor_y='bottom', checked=False):
+
+        Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
         
         fg = (.5,.5,.5, 1)
         bg = (.5,.5,.5,.5)
@@ -99,7 +101,6 @@ class Checkbox(Widget):
                            width=height, height=height, radius=height/4-1,
                            foreground=fg, background=bg,
                            anchor_x=anchor_x, anchor_y=anchor_y)
-        Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
         self._elements['frame'] = frame
         self._elements['cross'] = cross
         self.checked = checked
