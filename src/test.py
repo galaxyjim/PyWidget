@@ -6,7 +6,7 @@ from hbox import HBox
 from slider import Slider
 from checkbox import Checkbox
 from label import Label
-from radiobutton import Radiobutton
+from combobox import ComboBox
 
 # pyglet. create window
 window = pyglet.window.Window(resizable=True)
@@ -18,7 +18,7 @@ label2 = Label(text='<font face="Helvetica,Arial" size="2" color=white>second La
                x=50, y=50)
 label3 = Label(text='<font face="Helvetica,Arial" size="2" color=white>third Label</font>',
                     x=50, y=50)
-rbutton = Radiobutton(x=50, y=50, height=90, width=100,
+cbox = ComboBox(x=50, y=50, height=90, width=100,
                       elements=[label1, label2, label3])
 
 button1 = Button(text='<font face="Helvetica,Arial" size="2" color="white">Click me 1</font>')
@@ -34,7 +34,7 @@ vbox = VBox(elements=[
             slider,
             HBox(elements=[button2, button3]),
             button1,
-            rbutton,
+            cbox,
             HBox(elements=[checkbox, label, button4])])
 
 # pywidget. put container in a dialog
@@ -49,8 +49,8 @@ def on_draw():
     window.clear()
     dialog.on_draw()
 
-@rbutton.event
-def on_Radiobutton_press(radiobutton):
+@cbox.event
+def on_comboboxbutton_press(cbox):
     print('change')
 
 @slider.event

@@ -40,7 +40,7 @@ from hbox import HBox
 from slider import Slider
 from checkbox import Checkbox
 from label import Label
-from radiobutton import Radiobutton
+from combobox import ComboBox
 
 # pyglet. create window
 window = pyglet.window.Window(resizable=True)

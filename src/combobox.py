@@ -39,10 +39,10 @@ from widget import Widget
 from label import Label
 
 # ----------------------------------------------------------------------- Button
-class Radiobutton(Widget):
-    ''' Radiobutton widget
+class ComboBox(Widget):
+    ''' ComboBox widget
 
-    This is a basic Radio button.
+    This is a basic ComboBox Button.
     '''
     # _________________________________________________________________ __init__
     def __init__(self, x=0, y=0, z=0, width=300, height=300, anchor_x='left',
@@ -112,8 +112,8 @@ class Radiobutton(Widget):
         self._elements['frame'].radius= 0
 
     # ___________________________________________________________ on_mouse_press
-    def on_mouse_press(self, x, y, Radiobutton, modifiers):
-        if Radiobutton == pyglet.window.mouse.LEFT:
+    def on_mouse_press(self, x, y, ComboboxButton, modifiers):
+        if ComboboxButton == pyglet.window.mouse.LEFT:
 
             if self._elements['chooselabel'].hit_test(x - self.x, y - self.y) and self.ropen == 0 :
                 self._elements['frame'].background = (0.8, 0.8, 0.8, 0.5)
@@ -128,7 +128,7 @@ class Radiobutton(Widget):
                 for i in range(len(self._elements) - 2):
                     if self._elements[i].hit_test(x - self.x, y - self.y):
                         self._elements['chooselabel'].set_text(self._elements[i].text)
-                        self.dispatch_event('on_Radiobutton_press', self)
+                        self.dispatch_event('on_comboboxbutton_press', self)
                         self._elements['frame'].background = (0.8, 0.8, 0.8, 0.5)
                         self._elements['frame'].height = - self._elements['chooselabel'].height
                         for i in range(len(self._elements) - 2):
@@ -139,8 +139,8 @@ class Radiobutton(Widget):
         return pyglet.event.EVENT_UNHANDLED
 
     # ___________________________________________________________ on_mouse_release
-    def on_mouse_release(self, x, y, Radiobutton, modifiers):
-        if Radiobutton == pyglet.window.mouse.LEFT:
+    def on_mouse_release(self, x, y, ComboboxButton, modifiers):
+        if ComboboxButton == pyglet.window.mouse.LEFT:
           if self.ropen == 0:
               # closed. looks like a button
               self._elements['frame'].background = (0.5, 0.5, 0.5, 0.5)
@@ -150,7 +150,7 @@ class Radiobutton(Widget):
           self.set_topmost()
         return pyglet.event.EVENT_UNHANDLED
 
-Radiobutton.register_event_type('on_Radiobutton_press')
+ComboBox.register_event_type('on_comboboxbutton_press')
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
@@ -162,17 +162,17 @@ if __name__ == '__main__':
                     x=50, y=50)
     label3 = Label(text='<font face="Helvetica,Arial" size="2" color=white>third Label</font>',
                     x=50, y=50)
-    rbutton = Radiobutton(x=50, y=50, height=90, width=100, elements=[label1, label2, label3])
-    window.push_handlers(rbutton)
+    cbox = ComboBox(x=50, y=50, height=90, width=100, elements=[label1, label2, label3])
+    window.push_handlers(cbox)
 
     @window.event
     def on_draw():
         window.clear()
-        rbutton.on_draw()
+        cbox.on_draw()
 
-    @rbutton.event
-    def on_Radiobutton_press(rbutton):
+    @cbox.event
+    def on_comboboxbutton_press(cbox):
         print('change')
-        print(rbutton._elements['chooselabel'].text)
+        print(cbox._elements['chooselabel'].text)
 
     pyglet.app.run()
