@@ -120,7 +120,9 @@ class Slider(Widget):
         if button == pyglet.window.mouse.LEFT:
           self._is_dragging = False
           self._elements['cursor'].background = (1, 1, 1, 1)
-          self.dispatch_event('on_value_change', self)
+
+          if self.hit_test(x, y):
+              self.dispatch_event('on_value_change', self)
         return pyglet.event.EVENT_UNHANDLED
         
 Slider.register_event_type('on_value_change')
