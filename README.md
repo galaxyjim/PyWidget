@@ -13,11 +13,11 @@ It easily integrates into your event loop and your draw code.
 
 **test.py** demonstrates all of the widgets.
 
-Each widget includes sample/test code.
-To see a widget, simply run its script,
+There is a sampe for each widget,
+simply run its script from the samples_and_tests directory
 e.g.:
 ```
-python button.py
+python button-test.py
 ```
 test.py runs a example of GUI built with the library.
 

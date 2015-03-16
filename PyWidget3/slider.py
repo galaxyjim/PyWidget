@@ -35,8 +35,8 @@
 # -----------------------------------------------------------------------------
 import pyglet
 from pyglet.gl import *
-from shape import Rectangle, Ellipse, Cross, Star
-from widget import Widget
+from .shape import Rectangle, Ellipse, Cross, Star
+from .widget import Widget
 
 
 # ----------------------------------------------------------------------- Slider
@@ -127,19 +127,3 @@ class Slider(Widget):
         
 Slider.register_event_type('on_value_change')
 
-# ------------------------------------------------------------------------------
-if __name__ == '__main__':
-    window = pyglet.window.Window(resizable=True)
-    slider = Slider(x=50, y=50)
-    window.push_handlers(slider)
-
-    @window.event
-    def on_draw():
-        window.clear()
-        slider.on_draw()
-
-    @slider.event
-    def on_value_change(slider):
-        print(slider.value)
-
-    pyglet.app.run()

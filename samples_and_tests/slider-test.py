@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 # Copyright (c) 2009 Nicolas Rougier, Matthieu Kluj, Jessy Cyganczuk
-# Copyright (c) 2015 James Gaston
+# Copyright (c) 2015 James Gaston.
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -33,57 +33,21 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 # -----------------------------------------------------------------------------
-'''Defines a set of basic 2D widgets.
+import pyglet
+from pyglet.gl import *
+from PyWidget3 import *
 
-All widgets have:
-----------------
+window = pyglet.window.Window(resizable=True)
+slider = Slider(x=50, y=50)
+window.push_handlers(slider)
 
-- a position in 2D space
-- a dimension in 2D space
-- a x alignment ('left', 'center' or 'right')
-- a y alignment ('top', 'center' or 'bottom')
+@window.event
+def on_draw():
+    window.clear()
+    slider.on_draw()
 
-Available widgets:
------------------
+@slider.event
+def on_value_change(slider):
+    print(slider.value)
 
-- Button (a simple button)
-- Checkbox (a simple checkbox)
-- Dialog (a dialog with a title, a close button and a content which has to be a children of Widget)
-- HBox (used to split content into horizontal parts)
-- Label (a simple label)
-- Slider (a simple slider)
-- VBox (used to split content into vertical parts)
-
-Example usage:
---------------
- 
-   window = pyglet.window.Window(resizable=True)
-   button = Button(text='<font face="Helvetica,Arial" size="2" color=white>Click me</font>',
-                   x=50, y=50)
-   window.push_handlers(button)
-
-   @window.event
-   def on_draw():
-       window.clear()
-       button.on_draw()
-
-   @button.event
-   def on_button_press(button):
-       print 'Click'
-
-   pyglet.app.run()
-
-:requires: pyglet 1.1
-'''
-__docformat__ = 'restructuredtext'
-__version__ = '1.0'
-
-from button import Button
-from checkbox import Checkbox
-from dialog import Dialog
-from hbox import HBox
-from label import Label
-from slider import Slider
-from vbox import VBox
-from combobox import ComboBox
-
+pyglet.app.run()

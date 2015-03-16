@@ -69,66 +69,19 @@
 # -----------------------------------------------------------------------------
 import pyglet
 from pyglet.gl import *
-from shape import Rectangle, Ellipse, Cross, Star
-from widget import Widget
+from PyWidget3 import *
 
+window = pyglet.window.Window(resizable=True)
+checkbox = Checkbox(x=50, y=50, height=20, width=100)
+window.push_handlers(checkbox)
 
-# ----------------------------------------------------------------------- Label
-class Label(Widget):
-    ''' Label widget
-    
-    Basic label
-    '''
-    # _________________________________________________________________ __init__
-    def __init__(self, x=0, y=0, z=0, width=0, height=0, pad = (10,2),
-                 font_size = 10, anchor_x='left', anchor_y='bottom',
-                 text='Text'):
+@window.event
+def on_draw():
+    window.clear()
+    checkbox.on_draw()
 
-        Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
+@checkbox.event
+def on_value_change(checkbox):
+    print(checkbox.checked)
 
-        self.text = text
-        label = pyglet.text.HTMLLabel(self.text,
-                                      anchor_x = 'center', anchor_y = 'center')
-        xpad,ypad = pad
-        if width == 0:
-            width = label.content_width + 2*xpad
-        if height == 0:
-            height = label.content_height/2 +2*ypad
-        label.x = width/2
-        label.y = height/2+1
-
-        self._elements['label'] = label
-
-    # ____________________________________________________________________ set_cursor
-    def set_text(self, text):
-      ''' Sets the label text
-
-      :Parameters:
-          `text` : String
-              text of the label.
-      '''
-      self.text = text
-      self._elements['label'].text = text
-
-    # ____________________________________________________________________ update_width
-    def update_width(self):
-        self._elements['label'].width = self.width
-        self._elements['label'].x = self.width / 2
-        
-    # ____________________________________________________________________ update_height
-    def update_height(self):
-        self._elements['label'].content_height = self.height
-        self._elements['label'].y = self.height / 2 + 1
-
-# ------------------------------------------------------------------------------
-if __name__ == '__main__':
-    window = pyglet.window.Window(resizable=True)
-    label = Label(text='<font face="Helvetica,Arial" size="2" color=white>Just a test</font>',
-                    x=50, y=50)
-
-    @window.event
-    def on_draw():
-        window.clear()
-        label.on_draw()
-
-    pyglet.app.run()
+pyglet.app.run()

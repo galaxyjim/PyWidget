@@ -1,12 +1,5 @@
 import pyglet
-from dialog import Dialog
-from button import Button
-from vbox import VBox
-from hbox import HBox
-from slider import Slider
-from checkbox import Checkbox
-from label import Label
-from combobox import ComboBox
+from PyWidget3 import *
 
 # pyglet. create window
 window = pyglet.window.Window(resizable=True)

@@ -35,15 +35,14 @@
 # -----------------------------------------------------------------------------
 import pyglet
 from pyglet.gl import *
-from shape import Rectangle, Ellipse, Cross, Star
-from widget import Widget
+from .shape import Rectangle, Ellipse, Cross, Star
+from .widget import Widget
 
-
-# ----------------------------------------------------------------------- VBox
-class VBox(Widget):
-    ''' Slider widget
+# ----------------------------------------------------------------------- HBox
+class HBox(Widget):
+    ''' HBox widget
     
-    Used to split content into vertical parts
+    Used to split content into horizontal parts
     '''
     # _________________________________________________________________ __init__
     def __init__(self, x=0, y=0, z=0, width=300, height=300,
@@ -54,39 +53,22 @@ class VBox(Widget):
       self.margin = 3
       length = len(elements)
       for i in range(length):
-        elements[i].height = height / length - 2 * self.margin
-        elements[i].width = width - 2 * self.margin
-        elements[i].x = self.margin
-        elements[i].y = (height - self.margin) - (i + 1) * (elements[i].height + self.margin)
+        elements[i].height = height - 2 * self.margin
+        elements[i].width = width / length - 2 * self.margin
+        elements[i].x = (width - self.margin) - (i + 1) * (elements[i].width + self.margin)
+        elements[i].y = self.margin
         
         self._elements[i] = elements[i]
         self._elements[i].set_parent( self )
       
     # ____________________________________________________________________ update_width
     def update_width(self):
-      for i in range(len(self._elements)):
-        self._elements[i].width = self.width - 2 * self.margin
+      length = len(self._elements)
+      for i in range(length):
+        self._elements[i].width = self.width / length - 2 * self.margin
+        self._elements[i].x = (self.width - self.margin) - (i + 1) * (self._elements[i].width + self.margin)
 
     # ____________________________________________________________________ update_height
     def update_height(self):
-      length = len(self._elements)
-      for i in range(length):
-        self._elements[i].height = self.height / length - self.margin
-        self._elements[i].y = (self.height - self.margin / 2) - (i + 1) * self._elements[i].height - i * self.margin
-
-# ------------------------------------------------------------------------------
-if __name__ == '__main__':
-    from button import Button
-    window = pyglet.window.Window(resizable=True)
-    
-    button1 = Button(text='<font face="Helvetica,Arial" size="2" color="white">Click me 1</font>')
-    button2 = Button(text='<font face="Helvetica,Arial" size="2" color=white>Click me 2</font>')
-    button3 = Button(text='<font face="Helvetica,Arial" size="2" color=white>Click me 3</font>')
-    
-    vbox = VBox(x=50, y=50, height=90, width=100, elements=[button1, button2, button3])
-    window.push_handlers(vbox)
-    @window.event
-    def on_draw():
-        window.clear()
-        vbox.on_draw()
-    pyglet.app.run()
+      for i in range(len(self._elements)):
+        self._elements[i].height = self.height - 2 * self.margin

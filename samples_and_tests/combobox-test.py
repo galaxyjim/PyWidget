@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
-# Copyright (c) 2015 James Gaston
+# Copyright (c) 2009 Nicolas Rougier, Matthieu Kluj, Jessy Cyganczuk
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions 
+# modification, are permitted provided that the following conditions
 # are met:
 #
 #  * Redistributions of source code must retain the above copyright
 #    notice, this list of conditions and the following disclaimer.
-#  * Redistributions in binary form must reproduce the above copyright 
+#  * Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in
 #    the documentation and/or other materials provided with the
 #    distribution.
@@ -33,35 +33,27 @@
 # POSSIBILITY OF SUCH DAMAGE.
 # -----------------------------------------------------------------------------
 import pyglet
-from dialog import Dialog
-from button import Button
-from vbox import VBox
-from hbox import HBox
-from slider import Slider
-from checkbox import Checkbox
-from label import Label
-from combobox import ComboBox
+from pyglet.gl import *
+from PyWidget3 import *
 
-# pyglet. create window
 window = pyglet.window.Window(resizable=True)
+label1 = Label(text='<font face="Helvetica,Arial" size="2" color=white>First Label</font>',
+                x=50, y=50)
+label2 = Label(text='<font face="Helvetica,Arial" size="2" color=white>second Label</font>',
+                x=50, y=50)
+label3 = Label(text='<font face="Helvetica,Arial" size="2" color=white>third Label</font>',
+                x=50, y=50)
+cbox = ComboBox(x=50, y=50, height=90, width=100, elements=[label1, label2, label3])
+window.push_handlers(cbox)
 
-# pywidget. put widgets in a container
-vbox1 = VBox(elements=[Button(text="B1")])
-dialog1 = Dialog(title='My Dialog', x=100, y=100, content=vbox1, width=300, height=160)
-
-vbox2 = VBox(elements=[Button(text="B2")])
-dialog2 = Dialog(title='My Dialog', x=150, y=150, content=vbox2, width=300, height=160)
-
-main_gui_window = VBox(elements=[dialog1, dialog2])
-
-# pywidget. put top widget into pyglet. you should only have one top level widget per opengl window.
-window.push_handlers(main_gui_window)
-
-# pywidget. event handlers for widgets
 @window.event
 def on_draw():
     window.clear()
-    main_gui_window.on_draw()
- 
-# pyglet. event loop
+    cbox.on_draw()
+
+@cbox.event
+def on_comboboxbutton_press(cbox):
+    print('change')
+    print(cbox._elements['chooselabel'].text)
+
 pyglet.app.run()

@@ -69,8 +69,8 @@
 # -----------------------------------------------------------------------------
 import pyglet
 from pyglet.gl import *
-from shape import Rectangle, Ellipse, Cross, Star
-from widget import Widget
+from .shape import Rectangle, Ellipse, Cross, Star
+from .widget import Widget
 
 
 # ----------------------------------------------------------------------- Checkbox
@@ -142,20 +142,3 @@ class Checkbox(Widget):
         return pyglet.event.EVENT_UNHANDLED
 
 Checkbox.register_event_type('on_value_change')
-
-# ------------------------------------------------------------------------------
-if __name__ == '__main__':
-    window = pyglet.window.Window(resizable=True)
-    checkbox = Checkbox(x=50, y=50, height=20, width=100)
-    window.push_handlers(checkbox)
-
-    @window.event
-    def on_draw():
-        window.clear()
-        checkbox.on_draw()
-
-    @checkbox.event
-    def on_value_change(checkbox):
-        print(checkbox.checked)
-
-    pyglet.app.run()

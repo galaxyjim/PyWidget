@@ -37,7 +37,7 @@ import collections
 import pyglet
 from pyglet.gl import *
 from pyglet.event import EventDispatcher
-from shape import Rectangle, Ellipse, Cross, Star
+from .shape import Rectangle, Ellipse, Cross, Star
 
 
 # ------------------------------------------------------------------------------

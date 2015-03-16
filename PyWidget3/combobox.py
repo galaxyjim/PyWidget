@@ -34,9 +34,9 @@
 # -----------------------------------------------------------------------------
 import pyglet
 from pyglet.gl import *
-from shape import Rectangle, Ellipse, Cross, Star
-from widget import Widget
-from label import Label
+from .shape import Rectangle, Ellipse, Cross, Star
+from .widget import Widget
+from .label import Label
 
 # ----------------------------------------------------------------------- Button
 class ComboBox(Widget):
@@ -152,28 +152,3 @@ class ComboBox(Widget):
         return pyglet.event.EVENT_UNHANDLED
 
 ComboBox.register_event_type('on_comboboxbutton_press')
-
-# ------------------------------------------------------------------------------
-if __name__ == '__main__':
-
-    window = pyglet.window.Window(resizable=True)
-    label1 = Label(text='<font face="Helvetica,Arial" size="2" color=white>First Label</font>',
-                    x=50, y=50)
-    label2 = Label(text='<font face="Helvetica,Arial" size="2" color=white>second Label</font>',
-                    x=50, y=50)
-    label3 = Label(text='<font face="Helvetica,Arial" size="2" color=white>third Label</font>',
-                    x=50, y=50)
-    cbox = ComboBox(x=50, y=50, height=90, width=100, elements=[label1, label2, label3])
-    window.push_handlers(cbox)
-
-    @window.event
-    def on_draw():
-        window.clear()
-        cbox.on_draw()
-
-    @cbox.event
-    def on_comboboxbutton_press(cbox):
-        print('change')
-        print(cbox._elements['chooselabel'].text)
-
-    pyglet.app.run()

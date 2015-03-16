@@ -35,8 +35,8 @@
 # -----------------------------------------------------------------------------
 import pyglet
 from pyglet.gl import *
-from shape import Rectangle, Ellipse, Cross, Star
-from widget import Widget
+from .shape import Rectangle, Ellipse, Cross, Star
+from .widget import Widget
 from pyglet.event import EventDispatcher
 
 
@@ -128,15 +128,3 @@ class Dialog(Widget):
                 return pyglet.event.EVENT_HANDLED
         return super(Dialog, self).on_mouse_drag(x, y, dx, dy, button, modifiers)
 
-# ------------------------------------------------------------------------------
-if __name__ == '__main__':
-    window = pyglet.window.Window(resizable=True)
-    dialog = Dialog(x=50, y=50)
-    window.push_handlers(dialog)
-    
-    @window.event
-    def on_draw():
-        window.clear()
-        dialog.on_draw()
-
-    pyglet.app.run()
