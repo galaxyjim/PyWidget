@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
-# Copyright (c) 2009 Nicolas Rougier, Matthieu Kluj, Jessy Cyganczuk
 # Copyright (c) 2015 James Gaston
 # All rights reserved.
 # 
@@ -33,58 +32,39 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 # -----------------------------------------------------------------------------
-'''Defines a set of basic 2D widgets.
+import pyglet
+from pyglet.gl import *
+from .shape import Rectangle, Ellipse, Cross, Star
+from .widget import Widget
 
-All widgets have:
-----------------
+# ----------------------------------------------------------------------- HBox
+class Canvas(Widget):
+    ''' Canvas widget
+    
+    any empty widget, acts as a parent container for other widgets
+    it handles mouse event and draw event routing.
+    it handles relative move
+    it does not (yet) handle relative scaling, if the window is resized
+    '''
+    # _________________________________________________________________ __init__
+    def __init__(self, x=0, y=0, z=0, width=300, height=300,
+                anchor_x='left', anchor_y='bottom', elements=[]):
 
-- a position in 2D space
-- a dimension in 2D space
-- a x alignment ('left', 'center' or 'right')
-- a y alignment ('top', 'center' or 'bottom')
+      Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
 
-Available widgets:
------------------
+      length = len(elements)
+      for i in range(length):
+        self._elements[i] = elements[i]
+        self._elements[i].set_parent( self )
 
-- Button (a simple button)
-- Checkbox (a simple checkbox)
-- Dialog (a dialog with a title, a close button and a content which has to be a children of Widget)
-- HBox (used to split content into horizontal parts)
-- Label (a simple label)
-- Slider (a simple slider)
-- VBox (used to split content into vertical parts)
+    # _________________________________________________________________ on_draw
+    def on_draw(self):
+        # draw self
+        glTranslatef(self._root_x, self._root_y, self._root_z)
+        self.dispatch_event('widget_draw', self)
+        glTranslatef(-self._root_x, -self._root_y, -self._root_z)
 
-Example usage:
---------------
- 
-   window = pyglet.window.Window(resizable=True)
-   button = Button(text='<font face="Helvetica,Arial" size="2" color=white>Click me</font>',
-                   x=50, y=50)
-   window.push_handlers(button)
+        # then draw children
+        Widget.on_draw(self)
 
-   @window.event
-   def on_draw():
-       window.clear()
-       button.on_draw()
-
-   @button.event
-   def on_button_press(button):
-       print 'Click'
-
-   pyglet.app.run()
-
-:requires: pyglet 1.1
-'''
-__docformat__ = 'restructuredtext'
-__version__ = '1.0'
-
-from .button import Button
-from .canvas import Canvas
-from .checkbox import Checkbox
-from .dialog import Dialog
-from .hbox import HBox
-from .label import Label
-from .slider import Slider
-from .vbox import VBox
-from .combobox import ComboBox
-
+Canvas.register_event_type('widget_draw')

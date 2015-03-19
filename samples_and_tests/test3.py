@@ -22,6 +22,7 @@ window = pyglet.window.Window(config=config)
 
 # pywidget. put widgets in a container
 b1 = Button(text="EXIT", x=20, y=20)
+label = Label(x=100, y=400, text='<font color=white size="4">OpenGL draw during <i>on_draw</i> event</font>')
 
 # pywidget. widget into pyglet
 window.push_handlers(b1)
@@ -80,6 +81,7 @@ def on_draw():
     
     # pywidget draw
     b1.on_draw()
+    label.on_draw() # since the windows don't move or popup, no need for them to be in a container window.
 
 @b1.event
 def on_button_press(button):

@@ -118,6 +118,7 @@ class Checkbox(Widget):
         self._elements['cross'].width = self._elements['cross'].height = self.height - 8
         self._elements['cross'].x = 4.2 + self.width / 2 - self.height / 2
     
+    # ____________________________________________________________________ on_draw
     def on_draw(self):
         glTranslatef(self._root_x, self._root_y, self._root_z)
         self._elements['frame'].draw()
