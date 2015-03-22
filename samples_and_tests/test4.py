@@ -34,8 +34,8 @@ desktop = Canvas(x=0, y=0,
 window.push_handlers(desktop)
 
 # pywidget. canvas allows user drawing.
-# Note: widget_draw event doesn't have setup clipping,
-#       it only prepares the x/y offset of the draw area.
+# Note: widget_draw event sets clipping.
+#       and prepares the x/y offset of the draw area.
 @drawarea.event
 def widget_draw(canvas):
 

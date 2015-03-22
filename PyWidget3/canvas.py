@@ -44,7 +44,7 @@ class Canvas(Widget):
     any empty widget, acts as a parent container for other widgets
     it handles mouse event and draw event routing.
     it handles relative move
-    it does not (yet) handle relative scaling, if the window is resized
+    it does not handle relative scaling of children, if the window is resized
     '''
     # _________________________________________________________________ __init__
     def __init__(self, x=0, y=0, z=0, width=300, height=300,
@@ -59,12 +59,30 @@ class Canvas(Widget):
 
     # _________________________________________________________________ on_draw
     def on_draw(self):
+ 
+        # save scissoring
+        savescissor = (GLint * 4)()
+        glGetIntegerv( GL_SCISSOR_BOX, savescissor)
+        save_scissor_enable = glIsEnabled(GL_SCISSOR_TEST)
+
+        # set scissoring
+        glScissor( self._root_x, self._root_y,
+                   self.width, self.height)
+        glEnable(GL_SCISSOR_TEST)
+
         # draw self
         glTranslatef(self._root_x, self._root_y, self._root_z)
         self.dispatch_event('widget_draw', self)
         glTranslatef(-self._root_x, -self._root_y, -self._root_z)
 
-        # then draw children
+        # restore scissoring
+        glScissor( savescissor[0], savescissor[1],
+                   savescissor[2], savescissor[3])
+        
+        if not save_scissor_enable:
+            glDisable(GL_SCISSOR_TEST)
+        
+        # draw children
         Widget.on_draw(self)
 
 Canvas.register_event_type('widget_draw')
