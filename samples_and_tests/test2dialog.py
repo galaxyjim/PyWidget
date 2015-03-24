@@ -41,13 +41,13 @@ window = pyglet.window.Window(resizable=True)
 # pywidget. put widgets in a container
 b1 = Button(text="B1")
 vbox1 = VBox(elements=[b1])
-dialog1 = Dialog(title='My Dialog', x=100, y=100, content=vbox1, width=300, height=160)
+dialog1 = Dialog(title='My Dialog', x=100, y=50, content=vbox1, width=300, height=160)
 
 b2 = Button(text="B2")
 vbox2 = VBox(elements=[b2])
-dialog2 = Dialog(title='My Dialog', x=150, y=150, content=vbox2, width=300, height=160)
+dialog2 = Dialog(title='My Dialog', x=150, y=220, content=vbox2, width=300, height=160)
 
-main_gui_window = VBox(elements=[dialog1, dialog2])
+main_gui_window = Canvas(elements=[dialog1, dialog2])
 
 # pywidget. put top widget into pyglet. you should only have one top level widget per opengl window.
 window.push_handlers(main_gui_window)
