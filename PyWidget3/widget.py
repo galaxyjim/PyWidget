@@ -84,6 +84,7 @@ class Widget(EventDispatcher):
         self._sizeable = True
         self._hidden = False
         self._parent = None
+        self.focus = None
 
     # ________________________________________________________________________ x
     def _get_x(self):
@@ -366,3 +367,42 @@ class Widget(EventDispatcher):
     # _____________________________________________________________________ on_draw
     def draw(self):
       self.on_draw()
+
+    # _____________________________________________________________________ on_text
+    def on_text(self, text):
+        if self.focus:
+            self.focus.caret.on_text(text)
+
+    # _____________________________________________________________________ on_text_motion
+    def on_text_motion(self, motion):
+        if self.focus:
+            self.focus.caret.on_text_motion(motion)
+    # _____________________________________________________________________ on_text_motion_select
+    def on_text_motion_select(self, motion):
+        if self.focus:
+            self.focus.caret.on_text_motion_select(motion)
+
+    # _____________________________________________________________________ set_focus
+    # set text input window.
+    # requires a root container window to route text messages.
+    def set_focus(self, focus):
+        # find root window
+        w = self
+
+        runaway = 10
+        while( w._parent != None and runaway > 0 ):
+            w = w._parent
+            runaway -= 1
+
+        w._apply_focus(focus)
+
+    # _____________________________________________________________________ _apply_focus
+    # internal: remove old focus. set new focus
+    def _apply_focus(self, focus):
+        if self.focus:
+            self.focus.on_unset_focus()
+
+        self.focus = focus
+
+        if self.focus:
+            self.focus.on_set_focus()
