@@ -87,4 +87,5 @@ from .label import Label
 from .slider import Slider
 from .vbox import VBox
 from .combobox import ComboBox
+from .editbox import EditBox
 
