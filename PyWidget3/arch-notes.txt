@@ -1,4 +1,5 @@
-
+you should make a canvas (or other container) to contain all other widgets.
+this common container will provide routing for text handling and for draw order.
 
 base class:
     widget.py
@@ -7,6 +8,7 @@ container classes:
     vbox
     hbox
     dialog
+    canvas
 
 widgets can have a parent.
 
@@ -19,13 +21,17 @@ items created last are on top.
 elements are stored in an OrderedDict to preserve/create a defined order
 and so elements can be accessed by key.
 
-combobox and dialog items to bring themselves to the foreground,
+combobox and dialog items bring themselves to the foreground,
 they need to do that, because they can overlap other controls.
 they need access to notify their parent.
 
-A widgets parent is set by the parent when the element is added.
+A widget's parent is set by the parent when the element is added.
 
 
-if windows are to overlap, they must be contained in a common parent window,
+
+if windows could overlap, they must be contained in a common ancestor window,
 even if that parent window draws nothing it will coordinate the draw and message
 handling
+
+if multiple editbox widgets exist, they must have a common ancestor.
+this is required to route text/caret events to the correctly.
