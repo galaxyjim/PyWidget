@@ -45,20 +45,35 @@ class VBox(Widget):
     
     Used to split content into vertical parts
     '''
-    # _________________________________________________________________ __init__
-    def __init__(self, x=0, y=0, z=0, width=300, height=300,
+    # ____________________________________________________________________ __init__
+    def __init__(self, x=0, y=0, z=0, width=0, height=0,
                 anchor_x='left', anchor_y='bottom', elements=[]):
+
+      self.margin = 3
+      save_height = False
+
+      if width == 0:
+          width = max( [thing.width for thing in elements] ) + 2 * self.margin
+
+      if height == 0:
+          height = sum( [thing.height for thing in elements] ) + (len(elements)+1) * self.margin
+          save_height = True
 
       Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
 
-      self.margin = 3
       length = len(elements)
-      for i in range(length):
-        elements[i].height = height / length - 2 * self.margin
+      first = True
+      for i in reversed(range(length)):
+        if not save_height:
+            elements[i].height = height / length - 2 * self.margin
         elements[i].width = width - 2 * self.margin
         elements[i].x = self.margin
-        elements[i].y = (height - self.margin) - (i + 1) * (elements[i].height + self.margin)
-        
+        if first:
+            first = False
+            elements[i].y = self.margin
+        else:
+            elements[i].y = elements[i+1].y + elements[i+1].height + self.margin
+                    
         self._elements[i] = elements[i]
         self._elements[i].set_parent( self )
       
@@ -70,7 +85,11 @@ class VBox(Widget):
     # ____________________________________________________________________ update_height
     def update_height(self):
       length = len(self._elements)
-      for i in range(length):
+      first = True
+      for i in reversed(range(length)):
         self._elements[i].height = self.height / length - self.margin
-        self._elements[i].y = (self.height - self.margin / 2) - (i + 1) * self._elements[i].height - i * self.margin
-
+        if first:
+            first = False
+            self._elements[i].y = self.margin
+        else:
+            self._elements[i].y = self._elements[i+1].y + self._elements[i+1].height + self.margin

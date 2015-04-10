@@ -44,20 +44,31 @@ class HBox(Widget):
     
     Used to split content into horizontal parts
     '''
-    # _________________________________________________________________ __init__
-    def __init__(self, x=0, y=0, z=0, width=300, height=300,
+    # ____________________________________________________________________ __init__
+    def __init__(self, x=0, y=0, z=0, width=0, height=0,
                 anchor_x='left', anchor_y='bottom', elements=[]):
 
-      Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
 
       self.margin = 3
+
+      if width == 0:
+          width = sum( [thing.width for thing in elements] ) + (len(elements)+1) * self.margin
+
+      if height == 0:
+          height = max( [thing.height for thing in elements] ) + 2 * self.margin
+
+      Widget.__init__( self, x, y, z, width, height, anchor_x, anchor_y)
+
       length = len(elements)
       for i in range(length):
         elements[i].height = height - 2 * self.margin
         elements[i].width = width / length - 2 * self.margin
-        elements[i].x = (width - self.margin) - (i + 1) * (elements[i].width + self.margin)
+        if i == 0:
+            elements[i].x = self.margin
+        else:
+            elements[i].x = elements[i-1].x + elements[i-1].width + self.margin
         elements[i].y = self.margin
-        
+
         self._elements[i] = elements[i]
         self._elements[i].set_parent( self )
       
@@ -66,7 +77,10 @@ class HBox(Widget):
       length = len(self._elements)
       for i in range(length):
         self._elements[i].width = self.width / length - 2 * self.margin
-        self._elements[i].x = (self.width - self.margin) - (i + 1) * (self._elements[i].width + self.margin)
+        if i == 0:
+            self._elements[i].x = self.margin
+        else:
+            self._elements[i].x = self._elements[i-1].x + self._elements[i-1].width + self.margin
 
     # ____________________________________________________________________ update_height
     def update_height(self):

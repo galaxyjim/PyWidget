@@ -4,6 +4,7 @@ import pyglet
 from pyglet.gl import *
 from .shape import Rectangle
 from .widget import Widget
+import sys, traceback
 
 # ----------------------------------------------------------------------- EditBox
 class EditBox(Widget):
@@ -20,12 +21,12 @@ class EditBox(Widget):
         fg = (.4,.4,.8, 1)
         fgint = (150, 150, 200, 255)
         bg = (.1,.1,.2, 1)
-        xpad,ypad = pad
+        self.xpad,self.ypad = pad
 
         #
         self.document = pyglet.text.document.UnformattedDocument(text)
         self.document.set_style(0, len(self.document.text), 
-            dict(color=fgint)
+            dict(color=fgint, font_size=font_size)
         )
 
         font = self.document.get_font()
@@ -36,26 +37,27 @@ class EditBox(Widget):
         
         self.caret = pyglet.text.caret.Caret(layout, color=(255,255,255))
         self.on_unset_focus()
+        
         #
         if width == 0 and len(text) > 0:
-            width = layout.content_width + 2 * xpad
+            width = layout.content_width + 2 * self.xpad
         elif width == 0:
             width = 200
             
         if height == 0:
-            height = layout.content_height + 2 * ypad
+            height = layout.content_height + 2 * self.ypad
 
         #
-        layout.x = xpad
-        layout.y = ypad
-        layout.height = height - 2*ypad
-        layout.width = width - 2*xpad
+        layout.x = self.xpad
+        layout.y = self.ypad
+        #layout.height = 
+        layout.width = width - 2*self.xpad
 
         frame = Rectangle( x=0, y=0, z=z,
                            width=width, height=height, radius=0,
                            foreground=fg, background=bg,
                            anchor_x=anchor_x, anchor_y=anchor_y)
-        
+
         self.text_cursor = window.get_system_mouse_cursor('text')
 
         #
@@ -63,6 +65,15 @@ class EditBox(Widget):
 
         self._elements['frame'] = frame
         self._elements['layout'] = layout
+    #
+    def update_width(self):
+        self._elements['frame'].width = self.width
+        self._elements['layout'].width = self.width - 2*self.xpad
+        
+    #
+    def update_height(self):
+        self._elements['frame'].height = self.height
+        #self._elements['layout'].height = 
 
     #
     def on_mouse_press(self, x, y, button, modifiers):

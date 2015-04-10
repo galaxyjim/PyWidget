@@ -7,46 +7,31 @@ from PyWidget3 import *
 # pyglet window
 window = pyglet.window.Window(resizable=True)
 
-rowsize = 30
-rowpixel = 200
-
 # pywidget
-label1 = Label( x=0, y=rowpixel,
-                font_size=14,
-                text='<font color=white>Character Info</font>',
-              )
-rowpixel -= rowsize
+label_header = Label(font_size=14, text='<font color=white>Character Info</font>', text_anchor_x='center')
 
 #
-label2 = Label( x=0, y=rowpixel,
-                font_size=11,
-                text='<font color=white>Name</font>',
-              )
-ebox1 = EditBox( x=75, y=rowpixel, width=200, window=window)
-rowpixel -= rowsize
+label_r1 = Label(font_size=11, text='<font color=white>Name</font>', anchor_x='left' )
+ebox_r1 = EditBox(width=200, window=window)
+ebox_r1.text = "Thud"
+hbox_r1 = HBox( elements=[label_r1, ebox_r1] )
 
 #
-label3 = Label( x=0, y=rowpixel,
-                font_size=11,
-                text='<font color=white>Subtext</font>',
-              )
-ebox2 = EditBox( x=75, y=rowpixel, window=window)
-rowpixel -= rowsize
+label_r2 = Label( font_size=11, text='<font color=white>Subtext</font>')
+ebox_r2 = EditBox( width=200, window=window)
+ebox_r2.text = "The barbarian"
+hbox_r2 = HBox( elements = [ label_r2, ebox_r2] )
 
 #
-label4 = Label( x=0, y=rowpixel,
-                font_size=11,
-                text='<font color=white>Class</font>',
-              )
+label_r3 = Label( font_size=11,text='<font color=white>Class</font>')
 class1 = Label(text="<font color=white>Fighter</font>", font_size=11)
 class2 = Label(text="<font color=white>Wizard</font>", font_size=11)
 class3 = Label(text="<font color=white>Healer</font>", font_size=11)
-combo1 = ComboBox(x=75, y=rowpixel, width=200, elements=[class1, class2, class3])
-rowpixel -= rowsize
- 
+combo_r3 = ComboBox(x=75, y=110, width=200, elements=[class1, class2, class3])
+hbox_r3 = HBox(elements=[label_r3, combo_r3])
+
 #
-desktop = Canvas(x=0, y=0, width=640, height=480,
-                 elements=[label1, label2, ebox1, label3, ebox2, label4, combo1])
+desktop = VBox(x=0, y=200, elements=[label_header, hbox_r1, hbox_r2, hbox_r3])
 
 # pyglet event hander for pywidget
 window.push_handlers(desktop)

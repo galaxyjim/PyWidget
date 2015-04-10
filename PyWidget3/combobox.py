@@ -77,7 +77,8 @@ class ComboBox(Widget):
                             z = z,
                             font_size=11,
                             height = height - 2*self.margin,
-                            width = width - 2*self.margin)
+                            width = width - 2*self.margin,
+                            text_anchor_x='center')
 
         frame = Rectangle (x = 0,
                            y = height,
@@ -142,6 +143,8 @@ class ComboBox(Widget):
 
                 self._elements['frame'].height = -(self.height - minv + self.margin)
 
+                self._elements['frame'].y -= self._elements['chooselabel'].height + 2*self.margin
+
                 self.ropen = 1
 
                 return pyglet.event.EVENT_HANDLED
@@ -158,6 +161,7 @@ class ComboBox(Widget):
 
                         self._elements['frame'].background = (0.8, 0.8, 0.8, 0.5)
                         self._elements['frame'].height = -self.height
+                        self._elements['frame'].y = self.height
 
                         for i in range(len(self._elements) - 2):
                             self._elements[i]._hidden = True

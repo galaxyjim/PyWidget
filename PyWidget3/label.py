@@ -82,24 +82,28 @@ class Label(Widget):
     # _________________________________________________________________ __init__
     def __init__(self, x=0, y=0, z=0, width=0, height=0, pad = (10,2),
                  font_size = 10, anchor_x='left', anchor_y='bottom',
-                 text='Text'):
+                 text='Text', text_anchor_x='left'):
 
 
         self.text = text
         label = pyglet.text.HTMLLabel(self.text,
-                                      anchor_x = 'center', anchor_y = 'center')
+                                      anchor_x = text_anchor_x, anchor_y = 'center')
         label.font_size = font_size
         xpad,ypad = pad
+        
         if width == 0:
             width = label.content_width + 2*xpad
         if height == 0:
-            height = label.content_height/2 +2*ypad
+            height = label.content_height/2 + 2*ypad
 
-        # needed to init ._elements, but
-        # but must be postponed to set w/h.
-        Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
-    
-        label.x = width/2
+        # Widget.__init__() is called after width and height are computed.
+        Widget.__init__( self, x, y, z, width, height, anchor_x, anchor_y)
+
+        if text_anchor_x == 'left':
+            label.x = 0
+        else:
+            label.x = width/2
+        
         label.y = height/2+1
 
         self._elements['label'] = label
@@ -118,7 +122,8 @@ class Label(Widget):
     # ____________________________________________________________________ update_width
     def update_width(self):
         self._elements['label'].width = self.width
-        self._elements['label'].x = self.width / 2
+        if self._elements['label'].anchor_x != 'left':
+            self._elements['label'].x = self.width / 2
         
     # ____________________________________________________________________ update_height
     def update_height(self):
