@@ -25,6 +25,11 @@ test.py runs a example of GUI built with the library.
 March 2015
 - port to python 3.4
 - bug fixes
+- add an EditBox widget
+
+## known limitations.
+- as of v1.0, the combobox can display the pulldown off the bottom of the screen.
+- no scrollbar nor scrollable listbox.
 
 ## License
 
