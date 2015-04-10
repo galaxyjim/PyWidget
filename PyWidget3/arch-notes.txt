@@ -35,3 +35,5 @@ handling
 
 if multiple editbox widgets exist, they must have a common ancestor.
 this is required to route text/caret events to the correctly.
+
+any container widget can act as the topmost window.
