@@ -39,11 +39,11 @@ from PyWidget3 import *
 window = pyglet.window.Window(resizable=True)
 label1 = Label(text='<font face="Helvetica,Arial" size="2" color=white>First Label</font>',
                 x=50, y=50)
-label2 = Label(text='<font face="Helvetica,Arial" size="2" color=white>second Label</font>',
+label2 = Label(text='<font face="Helvetica,Arial" size="2" color=white>Second Label</font>',
                 x=50, y=50)
-label3 = Label(text='<font face="Helvetica,Arial" size="2" color=white>third Label</font>',
+label3 = Label(text='<font face="Helvetica,Arial" size="2" color=white>Third Label</font>',
                 x=50, y=50)
-cbox = ComboBox(x=50, y=50, height=90, width=100, elements=[label1, label2, label3])
+cbox = ComboBox(x=50, y=200, height=30, width=100, elements=[label1, label2, label3])
 window.push_handlers(cbox)
 
 @window.event

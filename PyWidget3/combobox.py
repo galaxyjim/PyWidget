@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
+# Copyright (c) 2015 James Gaston
 # Copyright (c) 2009 Nicolas Rougier, Matthieu Kluj, Jessy Cyganczuk
 # All rights reserved.
 #
@@ -45,8 +46,18 @@ class ComboBox(Widget):
     This is a basic ComboBox Button.
     '''
     # _________________________________________________________________ __init__
-    def __init__(self, x=0, y=0, z=0, width=300, height=300, anchor_x='left',
-                 anchor_y='bottom', elements=[]):
+    def __init__(self, x=0, y=0, z=0,
+                 width=0, height=0,
+                 anchor_x='left',
+                 anchor_y='bottom',
+                 elements=[]):
+
+
+        #
+        if height == 0:
+            height = max( [thing.height for thing in elements] )
+        if width == 0:
+            width = max( [thing.width for thing in elements] )
 
         Widget.__init__(self,x,y,z,width,height,anchor_x,anchor_y)
 
@@ -60,15 +71,18 @@ class ComboBox(Widget):
         length = len(elements)
 
         #
+        chooselabel = Label(text = '<font color=white>...</font>',
+                            x = self.margin,
+                            y = self.margin,
+                            z = z,
+                            font_size=11,
+                            height = height - 2*self.margin,
+                            width = width - 2*self.margin)
 
-        chooselabel = Label(text='...',
-                            x=self.margin, y= (height - self.margin) - (
-                            elements[0].height + self.margin),
-                            height = height / length - 2 * self.margin,
-                            width = width - 2 * self.margin)
-
-        frame = Rectangle (x=chooselabel.x, y=chooselabel.y + chooselabel.height, z=z,
-                           width=chooselabel.width, height=-chooselabel.height, radius=0,
+        frame = Rectangle (x = 0,
+                           y = height,
+                           z = z,
+                           width=width, height=-height, radius=0,
                            foreground=fg, background=bg,
                            anchor_x=anchor_x, anchor_y=anchor_y)
 
@@ -77,10 +91,10 @@ class ComboBox(Widget):
 
         #
         for i in range(length):
-            elements[i].height = height / length - 2 * self.margin
-            elements[i].width = width - 2 * self.margin
+            elements[i].height = height - 2*self.margin
+            elements[i].width = width - 2*self.margin
             elements[i].x = self.margin
-            elements[i].y = (height - self.margin) - (i + 2) * (elements[i].height + self.margin)
+            elements[i].y = self.margin - (i+1)*(height - self.margin)
             self._elements[i] = elements[i]
             self._elements[i]._hidden = True
 
@@ -94,46 +108,60 @@ class ComboBox(Widget):
         self._elements['chooselabel'].x = self.margin
         self._elements['chooselabel'].width = self.width - 2 * self.margin
 
-        self._elements['frame'].x = self._elements['chooselabel'].x
-        self._elements['frame'].width = self._elements['chooselabel'].width
+        self._elements['frame'].x = 0
+        self._elements['frame'].width = self.width
 
     # ____________________________________________________________________ update_height
     def update_height(self):
         
         length = len(self._elements) - 2
         for i in range(length):
-            #self._elements[i].height = self.height / length - 2* self.margin
-            self._elements[i].y = (self.height - self.margin) - (i + 2) * (self._elements[i].height + self.margin)
+            self._elements[i].height = self.height - 2 * self.margin
+            self._elements[i].y = self.margin - (i+1)*(self.height + self.margin)
 
-        self._elements['chooselabel'].y = self.height - self._elements[0].height
-        self._elements['chooselabel'].height = self.height - self.margin
-
-        self._elements['frame'].y = self._elements['chooselabel'].y + self._elements['chooselabel'].height
-        self._elements['frame'].height = - self._elements['chooselabel'].height + self.margin
-        self._elements['frame'].radius= 0
-
-    # ___________________________________________________________ on_mouse_press
+        self._elements['chooselabel'].y = self.margin
+ 
+        self._elements['frame'].y = self.height
+        self._elements['frame'].height = -self.height
+ 
+    # ____________________________________________________________________ on_mouse_press
     def on_mouse_press(self, x, y, ComboboxButton, modifiers):
         if ComboboxButton == pyglet.window.mouse.LEFT:
 
-            if self._elements['chooselabel'].hit_test(x - self.x, y - self.y) and self.ropen == 0 :
+            # opening
+            if self._elements['chooselabel'].hit_test(x - self.x, y - self.y) and self.ropen == 0:
+                
                 self._elements['frame'].background = (0.8, 0.8, 0.8, 0.5)
                 self._elements['frame'].height = - self._elements['chooselabel'].height
+
+
+                minv = 0
                 for i in range(len(self._elements) - 2):
-                    self._elements['frame'].height += - self._elements[i].height - self.margin
                     self._elements[i]._hidden = False
+                    minv = min( minv, self._elements[i].y )
+
+                self._elements['frame'].height = -(self.height - minv + self.margin)
+
                 self.ropen = 1
+
                 return pyglet.event.EVENT_HANDLED
 
+            # closing
             if self.ropen == 1:
+                
                 for i in range(len(self._elements) - 2):
                     if self._elements[i].hit_test(x - self.x, y - self.y):
+
                         self._elements['chooselabel'].set_text(self._elements[i].text)
+
                         self.dispatch_event('on_comboboxbutton_press', self)
+
                         self._elements['frame'].background = (0.8, 0.8, 0.8, 0.5)
-                        self._elements['frame'].height = - self._elements['chooselabel'].height
+                        self._elements['frame'].height = -self.height
+
                         for i in range(len(self._elements) - 2):
                             self._elements[i]._hidden = True
+
                         self.ropen = 0
                         return pyglet.event.EVENT_HANDLED
 
@@ -147,7 +175,7 @@ class ComboBox(Widget):
               self._elements['frame'].background = (0.5, 0.5, 0.5, 0.5)
           else:
               # open. looks like a list box
-              self._elements['frame'].background = (0.5, 0.5, 0.5, 0.85)
+              self._elements['frame'].background = (0.3, 0.4, 0.5, 0.95)
           self.set_topmost()
         return pyglet.event.EVENT_UNHANDLED
 

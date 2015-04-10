@@ -11,7 +11,7 @@ label2 = Label(text='<font face="Helvetica,Arial" size="2" color=white>second La
                x=50, y=50)
 label3 = Label(text='<font face="Helvetica,Arial" size="2" color=white>third Label</font>',
                     x=50, y=50)
-cbox = ComboBox(x=50, y=50, height=90, width=100,
+cbox = ComboBox(x=50, y=50, height=30, width=100,
                       elements=[label1, label2, label3])
 
 button1 = Button(text='<font face="Helvetica,Arial" size="2" color="white">Click me 1</font>')

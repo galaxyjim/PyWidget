@@ -61,7 +61,7 @@ class Button(Widget):
             height = label.content_height/2 +2*ypad
         label.x = width/2
         label.y = height/2+1
-        frame = Rectangle (x=0, y=0, z=z,
+        frame = Rectangle( x=0, y=0, z=z,
                            width=width, height=height, radius=height/2-1,
                            foreground=fg, background=bg,
                            anchor_x=anchor_x, anchor_y=anchor_y)
